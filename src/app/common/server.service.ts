@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Headers, Http, RequestMethod, RequestOptionsArgs, Response} from "@angular/http";
+import {Headers, Http, Response} from "@angular/http";
 import {LocalStorageService} from "./localStorage.service";
 
 @Injectable()

@@ -16,14 +16,14 @@ export class LocalStorageService {
 
   public resetData() : void {
     let defaultObject : LocalStorageDataObject = new LocalStorageDataObject(false,"","","-1");
-    this.storeAll(defaultObject);
+    this.setAll(defaultObject);
   }
 
   public getAll() : LocalStorageDataObject {
     return JSON.parse(localStorage.getItem(this.storageKey))
   }
 
-  public storeAll(localStorageDataObject : LocalStorageDataObject) : void {
+  public setAll(localStorageDataObject : LocalStorageDataObject) : void {
     localStorage.setItem(this.storageKey, JSON.stringify(localStorageDataObject));
   }
 
@@ -36,7 +36,7 @@ export class LocalStorageService {
   public setStayLoggedIn(newStayLoggedIn) : void {
     let storedData : LocalStorageDataObject = this.getAll();
     storedData.stayLoggedIn = newStayLoggedIn;
-    this.storeAll(storedData);
+    this.setAll(storedData);
   }
 
   public getUsername() : string {
@@ -46,7 +46,7 @@ export class LocalStorageService {
   public setUsername(username) : void {
     let storedData : LocalStorageDataObject = this.getAll();
     storedData.username = username;
-    this.storeAll(storedData);
+    this.setAll(storedData);
   }
 
   public getPassword() : string {
@@ -56,7 +56,7 @@ export class LocalStorageService {
   public setPassword(password) : void {
     let storedData : LocalStorageDataObject = this.getAll();
     storedData.password = password;
-    this.storeAll(storedData);
+    this.setAll(storedData);
   }
 
   public getUserId() : string {
@@ -66,7 +66,7 @@ export class LocalStorageService {
   public setUserId(userId) : void {
     let storedData : LocalStorageDataObject = this.getAll();
     storedData.userId = userId;
-    this.storeAll(storedData);
+    this.setAll(storedData);
   }
 
 }

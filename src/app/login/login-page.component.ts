@@ -28,7 +28,7 @@ export class LoginPageComponent {
 
     //auto login
     if(this.stayLoggedIn && this.authService.isLoggedIn()) {
-      //this.navCtrl.push(ContentListPageComponent);
+      this.navCtrl.push(ContentListPageComponent);
     }
   }
 
@@ -36,9 +36,30 @@ export class LoginPageComponent {
     this.authService.signIn(this.username, this.password)
       .then((httpResponse : Response) => {
         console.log(httpResponse);
+        if(httpResponse.status == 200) {
+          let parsedObject = httpResponse.json();
+          this.localStorageService.setUsername(parsedObject.username);
+          this.localStorageService.setPassword(parsedObject.password);
+          this.localStorageService.setUserId(parsedObject.id);
+          this.navCtrl.push(ContentListPageComponent);
+        } else {
+          let alert = this.alertCtrl.create({
+            title: 'Something went wrong',
+            message: 'The server seems to be not ready',
+            buttons: ['Dismiss']
+          });
+          alert.present();
+        }
       })
       .catch((error) => {
         console.log(error);
+        let alert = this.alertCtrl.create({
+          title: 'Something went wrong',
+          message: 'Connection error',
+          buttons: ['Dismiss']
+        });
+
+        alert.present();
       });
   }
 
