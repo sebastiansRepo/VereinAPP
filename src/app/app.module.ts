@@ -11,12 +11,18 @@ import {AuthService} from "./common/auth.service";
 import {SubscriptionService} from "./common/subscription.service";
 import {LoginPageComponent} from "./login/login-page.component";
 import {HttpModule} from "@angular/http";
+import {LocalStorageService} from "./common/localStorage.service";
+import {RegistryPageComponent} from "./login/registry-page.component";
+import {ServerService} from "./common/server.service";
+import {ContentListPageComponent} from "./content/content-list-page.component";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPageComponent
+    LoginPageComponent,
+    RegistryPageComponent,
+    ContentListPageComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +33,9 @@ import {HttpModule} from "@angular/http";
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPageComponent
+    LoginPageComponent,
+    RegistryPageComponent,
+    ContentListPageComponent
   ],
   providers: [
     StatusBar,
@@ -35,6 +43,8 @@ import {HttpModule} from "@angular/http";
     BarcodeScanner,
     AuthService,
     SubscriptionService,
+    LocalStorageService,
+    ServerService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

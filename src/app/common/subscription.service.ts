@@ -1,18 +1,12 @@
 import {Subscription} from "rxjs/Subscription";
 import {Injectable} from "@angular/core";
 
-/**
- * Created by sebb9 on 01.07.2017.
- */
-
 @Injectable()
 export class SubscriptionService {
 
   private subscriptions : Subscription[] = [];
 
-  constructor() {
-
-  }
+  constructor() {}
 
   public addSubscription(sub : Subscription) : void {
     this.subscriptions.push(sub);

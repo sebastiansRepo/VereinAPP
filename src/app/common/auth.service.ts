@@ -1,67 +1,41 @@
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs/Observable";
+import {LocalStorageService} from "./localStorage.service";
+import {ServerService} from "./server.service";
+import {AlertController} from "ionic-angular";
 
-/**
- * Created by Sebastian on 26.06.2017.
- */
 @Injectable()
 export class AuthService{
 
-  userId : string = "-1";
+  DomainLoginPath : string = "http://localhost:8080/projectSportverein/rs/login";
 
-  constructor(private angularHttp : Http){
+  constructor(private angularHttp : Http,
+              private serverService : ServerService,
+              private alertCtrl : AlertController,
+              private localStorageService : LocalStorageService){
   }
 
-  public signIn(username : string, password : string) : Observable<Response> {
-    let url  : string = "http://localhost:8080/projectSportverein/rs/login/auth";
-    let body : any =
-      "{ " +
-        "\"username\" : \"" + username + "\", " +
-        "\"password\" : \"" + password + "\"" +
-      "}";
-    return this.angularHttp.post(url, body);
+  public signIn(username : string, password : string) : Promise<Response> {
+    let url  : string = this.DomainLoginPath + "/auth";
+    return this.serverService.postJSON(url, username, password);
   }
 
-  public createAccount(username : string, password : string) : Observable<Response> {
-    let url  : string = "http://localhost:8080/projectSportverein/rs/login/register";
-    let body : any =
-      "{ " +
-        "\"username\" : \"" + username + "\", " +
-        "\"password\" : \"" + password + "\"" +
-      "}";
-    return this.angularHttp.post(url, body);
+  public createAccount(username : string, password : string) : Promise<Response> {
+    let url  : string = this.DomainLoginPath + "/register";
+    return this.serverService.postJSON(url, username, password);
   }
-
 
   public logout() {
-    this.userId = "-1";
-
+    this.localStorageService.resetData();
   }
 
-  public updateLoginCredentials(newUsername : string, newPassword : string) : Observable<Response> {
-    if(!this.checkIfLoggedIn()) return null; //user is not logged in -> can´t change credentials
-    let url  : string = "http://localhost:8080/projectSportverein/rs/login/" + this.userId;
-    let body : any =
-      "{ " +
-        "\"username\" : \"" + newUsername + "\", " +
-        "\"password\" : \"" + newPassword + "\"" +
-      "}";
-    return this.angularHttp.put(url, body);
+  public updateLoginCredentials(username : string, password : string) : Promise<Response> {
+    if(!this.isLoggedIn()) return null; //user is not logged in -> can´t change credentials
+    return this.serverService.putJSON(this.DomainLoginPath + this.localStorageService.getUserId(), username, password);
   }
 
-  /*
-  public getCurrentUser() : Observable<Response>  {
-
-  }*/
-
-  /*
-  public getAuthStateObservable() : Observable<Response> {
-
-  }*/
-
-  private checkIfLoggedIn() : Boolean {
-    if(this.userId == "-1") return false;
+  public isLoggedIn() : Boolean {
+    if(this.localStorageService.getUserId() == "-1") return false;
     return true;
   }
 
