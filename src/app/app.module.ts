@@ -7,25 +7,34 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {BarcodeScanner} from "@ionic-native/barcode-scanner";
+import {AuthService} from "./common/auth.service";
+import {SubscriptionService} from "./common/subscription.service";
+import {LoginPageComponent} from "./login/login-page.component";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPageComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
     BarcodeScanner,
+    AuthService,
+    SubscriptionService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
