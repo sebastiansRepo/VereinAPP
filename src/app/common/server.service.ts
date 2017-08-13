@@ -9,7 +9,7 @@ export class ServerService {
   constructor(private http : Http){
   }
 
-  public postData(url : string, data : any) : Promise<Response> {
+  public postData<T>(url : string, data : T) : Promise<T> {
 
     //data should also be in JSON-Format, because of Typescript-Objects... maybe cast twice to make sure?!
     // let dataToSend : string  = JSON.parse(JSON.stringify(data));
@@ -20,12 +20,13 @@ export class ServerService {
     headers.append("Content-Type", this.contentType);
 
 
-    return new Promise<Response>( (resolve, reject) => {
+    return new Promise<T>( (resolve, reject) => {
       let tempSubscription = this.http.post(url, data, headers).subscribe(
         (res : Response) => {
           if (res) {
-            //return full Response Object to make function more general
-            resolve(res);
+            //return Object to make function more general
+            let result : T = res.json();
+            resolve(result);
             //now unsubscribe
             tempSubscription.unsubscribe();
           }

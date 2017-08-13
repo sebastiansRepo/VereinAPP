@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title *ngIf="!showSearchbar">Meine Kurse</ion-title>
+
+    <ion-buttons *ngIf="!showSearchbar" end>
+      <button ion-button icon-only (click)="setShowSearchbar(true)">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-searchbar  *ngIf="showSearchbar"
+                    [(ngModel)]="searchQuery"
+                    (ionInput)="doSearch()"
+                    (ionClear)="clearSearchbar()"
+                    [showCancelButton]="true"
+                    (ionCancel)="setShowSearchbar(false)">
+    </ion-searchbar>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <button ion-item *ngFor="let kurs of filteredKurse" (click)="showKursDetails(kurs)">
+      {{kurs.name}} <span float-right>angemeldet:{{kurs.mitgliederAngemeldet.length}}</span>
+    </button>
+
+  </ion-list>
+
+</ion-content>

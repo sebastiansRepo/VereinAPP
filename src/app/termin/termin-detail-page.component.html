@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+
+    <ion-title>{{pageTitle}}</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="startScan()">
+        <ion-icon name="barcode"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <button ion-item *ngFor="let mitglied of kurs.mitgliederAngemeldet" (click)="showTerminDetails(termin)">
+      <h2>Vorname:{{mitglied.vorname}} Nachname: {{mitglied.nachname}} Geburtsdatum: {{mitglied.gebDatum}}</h2>
+    </button>
+
+  </ion-list>
+
+</ion-content>

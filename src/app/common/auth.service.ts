@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {LocalStorageService} from "./localStorage.service";
 import {ServerService} from "./server.service";
-import {Login} from "../login/login.model";
+import {Login} from "../model/login.model";
 
 @Injectable()
 export class AuthService{
@@ -14,7 +14,7 @@ export class AuthService{
 
   public signIn(login : Login)  {
     let url  : string = this.DOMAIN_LOGIN_PATH + "/auth";
-    return this.serverService.postData(url, login);
+    return this.serverService.postData<Login>(url, login);
   }
 
   public logout() {

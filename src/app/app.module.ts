@@ -13,14 +13,18 @@ import {LoginPageComponent} from "./login/login-page.component";
 import {HttpModule} from "@angular/http";
 import {LocalStorageService} from "./common/localStorage.service";
 import {ServerService} from "./common/server.service";
-import {ContentListPageComponent} from "./content/content-list-page.component";
+import {KursListPageComponent} from "./kurse/kurs-list-page.component";
+import {KursDetailPageComponent} from "./kurse/kurs-detail-page.component";
+import {TerminDetailPageComponent} from "./termin/termin-detail-page.component";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     LoginPageComponent,
-    ContentListPageComponent
+    KursListPageComponent,
+    KursDetailPageComponent,
+    TerminDetailPageComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,9 @@ import {ContentListPageComponent} from "./content/content-list-page.component";
     MyApp,
     HomePage,
     LoginPageComponent,
-    ContentListPageComponent
+    KursListPageComponent,
+    KursDetailPageComponent,
+    TerminDetailPageComponent
   ],
   providers: [
     StatusBar,
