@@ -2,9 +2,9 @@ import {Component} from "@angular/core";
 import {AlertController, NavController} from "ionic-angular";
 import {AuthService} from "../common/auth.service";
 import {LocalStorageService} from "../common/localStorage.service";
-import {RegistryPageComponent} from "./registry-page.component";
 import {ContentListPageComponent} from "../content/content-list-page.component";
 import {Response} from "@angular/http";
+import {Login} from "./login.model";
 
 @Component({
   selector:'login-page',
@@ -12,14 +12,17 @@ import {Response} from "@angular/http";
 })
 export class LoginPageComponent {
 
-  private username : string;
-  private password : string;
   private stayLoggedIn : boolean;
+
+  private login : Login;
 
   constructor(private alertCtrl: AlertController,
               private navCtrl: NavController,
               private authService: AuthService,
               private localStorageService : LocalStorageService) {
+
+    //create empty Login-object
+    this.login = new Login();
   }
 
   ionViewWillEnter() {
@@ -28,20 +31,23 @@ export class LoginPageComponent {
 
     //auto login
     if(this.stayLoggedIn && this.authService.isLoggedIn()) {
-      this.navCtrl.push(ContentListPageComponent);
+      this.navCtrl.setRoot(ContentListPageComponent);
     }
   }
 
-  public login() {
-    this.authService.signIn(this.username, this.password)
+  public signIn() {
+    this.authService.signIn(this.login)
       .then((httpResponse : Response) => {
         console.log(httpResponse);
         if(httpResponse.status == 200) {
+
+          //TODO - hier das Obekt in Login umwandeln, damit Typisiert gearbeitet werden kann
           let parsedObject = httpResponse.json();
           this.localStorageService.setUsername(parsedObject.username);
           this.localStorageService.setPassword(parsedObject.password);
           this.localStorageService.setUserId(parsedObject.id);
-          this.navCtrl.push(ContentListPageComponent);
+          this.navCtrl.setRoot(ContentListPageComponent);
+
         } else {
           let alert = this.alertCtrl.create({
             title: 'Something went wrong',
@@ -61,10 +67,6 @@ export class LoginPageComponent {
 
         alert.present();
       });
-  }
-
-  public createAccount() {
-    this.navCtrl.push(RegistryPageComponent, {username: this.username, password: this.password});
   }
 
 }

@@ -12,7 +12,6 @@ import {SubscriptionService} from "./common/subscription.service";
 import {LoginPageComponent} from "./login/login-page.component";
 import {HttpModule} from "@angular/http";
 import {LocalStorageService} from "./common/localStorage.service";
-import {RegistryPageComponent} from "./login/registry-page.component";
 import {ServerService} from "./common/server.service";
 import {ContentListPageComponent} from "./content/content-list-page.component";
 
@@ -21,7 +20,6 @@ import {ContentListPageComponent} from "./content/content-list-page.component";
     MyApp,
     HomePage,
     LoginPageComponent,
-    RegistryPageComponent,
     ContentListPageComponent
   ],
   imports: [
@@ -34,7 +32,6 @@ import {ContentListPageComponent} from "./content/content-list-page.component";
     MyApp,
     HomePage,
     LoginPageComponent,
-    RegistryPageComponent,
     ContentListPageComponent
   ],
   providers: [

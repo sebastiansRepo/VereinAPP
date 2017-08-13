@@ -7,11 +7,11 @@
   <ion-list>
     <ion-item>
       <ion-label>Username</ion-label>
-      <ion-input [(ngModel)]="username"></ion-input>
+      <ion-input [(ngModel)]="login.username"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
+      <ion-input type="password" [(ngModel)]="login.password"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Stay logged in</ion-label>
@@ -19,9 +19,6 @@
     </ion-item>
   </ion-list>
   <div padding>
-    <button type="submit" ion-button (click)="login()" block>Sign In</button>
-  </div>
-  <div padding>
-    <button ion-button (click)="createAccount()" block>Create new Account</button>
+    <button type="submit" ion-button (click)="signIn()" block>Sign In</button>
   </div>
 </ion-content>

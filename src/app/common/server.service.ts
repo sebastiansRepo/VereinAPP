@@ -1,32 +1,56 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http, Response} from "@angular/http";
-import {LocalStorageService} from "./localStorage.service";
 
 @Injectable()
-export class ServerService{
+export class ServerService {
 
-  constructor(private angularHttp : Http,
-              private localStorageService : LocalStorageService){
+  private contentType : string = "application/json";
+
+  constructor(private http : Http){
   }
 
-  public postJSON(url : string, username : string, password : string) {
-    let body : any = JSON.parse("{ " +
-      "\"username\" : \"" + username + "\", " +
-      "\"password\" : \"" + password + "\"" +
-      "}");
+  public postData(url : string, data : any) : Promise<Response> {
+
+    //data should also be in JSON-Format, because of Typescript-Objects... maybe cast twice to make sure?!
+    // let dataToSend : string  = JSON.parse(JSON.stringify(data));
+    // console.log(dataToSend);
+
+    //create Header to tell Server which Content-Type we commit
+    let headers : Headers = new Headers();
+    headers.append("Content-Type", this.contentType);
+
+
+    return new Promise<Response>( (resolve, reject) => {
+      let tempSubscription = this.http.post(url, data, headers).subscribe(
+        (res : Response) => {
+          if (res) {
+            //return full Response Object to make function more general
+            resolve(res);
+            //now unsubscribe
+            tempSubscription.unsubscribe();
+          }
+          else {
+            //tell Promise to call catch-Function, but also with the Server-response to catch the exact Error
+            reject(res);
+          }
+        }
+      );
+    });
+
+  }
+
+  public putData(url : string, data : any) : Promise<Response> {
+
     let headers : Headers = new Headers();
     headers.append("Content-Type","application/json");
-    return this.doPost(url, body, headers);
-  }
 
-  //to prevent redundant code
-  private doPost(url : string, body : any, headers : Headers) : Promise<Response> {
+
     return new Promise((resolve, reject) => {
-      let subscription = this.angularHttp.post(url, body, headers).subscribe(
+      let subscription = this.http.put(url, data, headers).subscribe(
         (response : Response) => {
           if(response) {
             resolve(response);
-            subscription.unsubscribe(); // NOT an unreachable statement
+            subscription.unsubscribe();
           } else {
             reject(response);
           }
@@ -35,29 +59,5 @@ export class ServerService{
     });
   }
 
-  public putJSON(url : string, username : string, password : string) : Promise<Response> {
-    let body : any = JSON.parse("{ " +
-      "\"username\" : \"" + username + "\", " +
-      "\"password\" : \"" + password + "\"" +
-      "}");
-    let headers : Headers = new Headers();
-    headers.append("Content-Type","application/json");
-    return this.doPut(url, body, headers);
-  }
-
-  private doPut(url : string, body : any, headers : Headers) : Promise<Response> {
-    return new Promise((resolve, reject) => {
-      let subscription = this.angularHttp.put(url, body, headers).subscribe(
-        (response : Response) => {
-          if(response) {
-            resolve(response);
-            subscription.unsubscribe(); // NOT an unreachable statement
-          } else {
-            reject(response);
-          }
-        }
-      )
-    });
-  }
 
 }
