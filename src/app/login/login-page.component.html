@@ -17,6 +17,10 @@
       <ion-label>Stay logged in</ion-label>
       <ion-checkbox [(ngModel)]="stayLoggedIn" (ionChange)="localStorageService.setStayLoggedIn(stayLoggedIn)"></ion-checkbox>
     </ion-item>
+    <ion-item>
+      <ion-label>Backend URL</ion-label>
+      <ion-input [(ngModel)]="backendUrl"></ion-input>
+    </ion-item>
   </ion-list>
   <div padding>
     <button type="submit" ion-button (click)="signIn()" block>Sign In</button>

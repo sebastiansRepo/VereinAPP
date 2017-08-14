@@ -6,14 +6,20 @@ import {Login} from "../model/login.model";
 @Injectable()
 export class AuthService{
 
-  private DOMAIN_LOGIN_PATH : string = "http://localhost:8080/projectSportverein/rs/login";
+  private BACKEND_URL : string = "";
+
+  private DOMAIN_LOGIN_PATH : string = "/projectSportverein/rs/login";
 
   constructor(private serverService : ServerService,
               private localStorageService : LocalStorageService){
+
   }
 
   public signIn(login : Login)  {
-    let url  : string = this.DOMAIN_LOGIN_PATH + "/auth";
+    //TODO - es sollte normal seit dem Login nicht vorkommen, das die BackendURL leer ist, aber evtl nochmal abfangen!
+    this.BACKEND_URL = this.localStorageService.getBackendUrl();
+
+    let url  : string = this.BACKEND_URL + this.DOMAIN_LOGIN_PATH + "/auth";
     return this.serverService.postData<Login>(url, login);
   }
 

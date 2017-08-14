@@ -13,6 +13,8 @@ export class LoginPageComponent {
 
   private stayLoggedIn : boolean;
 
+  private backendUrl : string = '';
+
   private login : Login;
 
   constructor(private alertCtrl: AlertController,
@@ -22,6 +24,9 @@ export class LoginPageComponent {
 
     //create empty Login-object
     this.login = new Login();
+
+    //set backendUrl if it was already set
+    this.backendUrl = localStorageService.getBackendUrl();
   }
 
   ionViewWillEnter() {
@@ -35,23 +40,51 @@ export class LoginPageComponent {
   }
 
   public signIn() {
-    this.authService.signIn(this.login)
-      .then((login : Login) => {
-        this.localStorageService.setUsername(login.username);
-        this.localStorageService.setPassword(login.password);
-        this.localStorageService.setUserId(login.id);
-        this.navCtrl.setRoot(KursListPageComponent, login.trainer);
-      })
-      .catch((error) => {
-        console.log(error);
-        let alert = this.alertCtrl.create({
-          title: 'Something went wrong',
-          message: 'Connection error',
-          buttons: ['Dismiss']
+
+    //now set BackendURL(If Client and Server not the Same-Device)
+    if (this.backendUrl && this.backendUrl.length > 0) {
+
+      this.localStorageService.setBackendUrl(this.backendUrl);
+
+      this.authService.signIn(this.login)
+        .then((login : Login) => {
+
+          if (login) {
+
+            this.localStorageService.setUsername(login.username);
+            this.localStorageService.setPassword(login.password);
+            this.localStorageService.setUserId(login.id);
+
+            this.navCtrl.setRoot(KursListPageComponent, login.trainer);
+
+          } else {
+            console.log("should not happen!");
+            console.log("No Login could be found!");
+          }
+
+        })
+        .catch((error) => {
+          console.log(error);
+          let alert = this.alertCtrl.create({
+            title: 'Something went wrong',
+            message: 'Connection error',
+            buttons: ['Dismiss']
+          });
+
+          alert.present();
         });
 
-        alert.present();
+    } else {
+      let alert = this.alertCtrl.create({
+        title: 'Please insert Backend URL',
+        message: 'Please specify the Device where your Server Application is running',
+        buttons: ['Dismiss']
       });
+      alert.present();
+    }
+
+
+
   }
 
 }

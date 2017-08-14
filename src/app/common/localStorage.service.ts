@@ -8,6 +8,8 @@ export class LocalStorageService {
 
   storageKey : string = "key";
 
+  private BACKEND_URL_KEY : string = 'BACKEND_URL';
+
   public defaultInit() : void {
     if(localStorage.getItem(this.storageKey) === null) {
       this.resetData();
@@ -67,6 +69,23 @@ export class LocalStorageService {
     let storedData : LocalStorageDataObject = this.getAll();
     storedData.userId = userId;
     this.setAll(storedData);
+  }
+
+  private setEntry<T>(key : string, data : T) : void {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  private getEntry<T>(key : string) : T {
+    let result : T = JSON.parse(localStorage.getItem(key));
+    return result;
+  }
+
+  public setBackendUrl(url : string) : void {
+    this.setEntry<string>(this.BACKEND_URL_KEY, url);
+  }
+
+  public getBackendUrl() : string {
+    return this.getEntry<string>(this.BACKEND_URL_KEY);
   }
 
 }
