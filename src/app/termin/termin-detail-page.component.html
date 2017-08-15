@@ -17,8 +17,14 @@
 <ion-content padding>
 
   <ion-list>
-    <button ion-item *ngFor="let mitglied of kurs.mitgliederAngemeldet" (click)="showTerminDetails(termin)">
-      <h2>Vorname:{{mitglied.vorname}} Nachname: {{mitglied.nachname}} Geburtsdatum: {{mitglied.gebDatum}}</h2>
+    <button color="secondary" ion-item *ngFor="let greenMember of greenMemberList">
+      <h2>Id: {{greenMember.id}} Vorname:{{greenMember.vorname}} Nachname: {{greenMember.nachname}} Geburtsdatum: {{greenMember.gebDatum}}</h2>
+    </button>
+    <button color="danger" ion-item *ngFor="let redMember of redMemberList">
+      <h2>Id: {{redMember.id}} Vorname:{{redMember.vorname}} Nachname: {{redMember.nachname}} Geburtsdatum: {{redMember.gebDatum}}</h2>
+    </button>
+    <button color="dark" ion-item *ngFor="let blackMember of blackMemberList">
+      <h2>Id: {{blackMember.id}} Vorname:{{blackMember.vorname}} Nachname: {{blackMember.nachname}} Geburtsdatum: {{blackMember.gebDatum}}</h2>
     </button>
 
   </ion-list>
