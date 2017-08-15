@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {NavParams} from "ionic-angular";
 import {Termin} from "../model/termin.model";
-import {BarcodeScanner} from "@ionic-native/barcode-scanner";
+import {BarcodeScanner, BarcodeScanResult} from "@ionic-native/barcode-scanner";
 import {Kurs} from "../model/kurs.model";
 
 @Component({
@@ -37,11 +37,18 @@ export class TerminDetailPageComponent {
 
     this.barcodeScanner.scan()
       .then(
-        (barcodeData) => {
+        (barcodeData : BarcodeScanResult) => {
 
           //TODO - hier müssen die Mitglieder ergäzt werden, die dann auch wirklich anwesen waren....
-          console.log(barcodeData);
-          alert(barcodeData);
+
+          //In barcodeData.text steht die eingescannte ID, also bspw 1
+          //d.h. es muss entweder auf Client-Seite die Liste aller angemeldeten Mitglieder durchgelaufen werden und dann entsprechend auf anwesend gesetzt werden,
+          //oder es muss auf Server-Seite einen Service geben, der Mitglieder anhand der ID zurück gibt und dann in die Liste mitgliederanwesend ergänzt.
+          //wäre vorteilhaft, wenn bspw auch unangemeldete Mitglieder teilnehmen können!!!
+
+
+          //den MitgliedService auf Server-Seite habe ich schon gemacht!!!
+
         },
         (err) => {
           console.log(err);
