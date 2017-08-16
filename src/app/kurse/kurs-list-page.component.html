@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title *ngIf="!showSearchbar">Meine Kurse</ion-title>
+    <ion-title *ngIf="!showSearchbar">My courses</ion-title>
 
     <ion-buttons *ngIf="!showSearchbar" end>
       <button ion-button icon-only (click)="setShowSearchbar(true)">
@@ -23,11 +23,17 @@
 <ion-content>
 
   <ion-list>
-
-    <button ion-item *ngFor="let kurs of filteredKurse" (click)="showKursDetails(kurs)">
-      {{kurs.name}} <span float-right>angemeldet:{{kurs.mitgliederAngemeldet.length}}</span>
-    </button>
-
+    <ion-item-sliding *ngFor="let kurs of filteredKurse">
+      <button ion-item  (click)="showKursDetails(kurs)">
+        {{kurs.name}} <span float-right>registered:{{kurs.mitgliederAngemeldet.length}}</span>
+      </button>
+      <ion-item-options side="right">
+        <button (click)="showMemberList(kurs)" ion-button color="primary">
+          <ion-icon name="people"></ion-icon>
+          Members
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 
 </ion-content>

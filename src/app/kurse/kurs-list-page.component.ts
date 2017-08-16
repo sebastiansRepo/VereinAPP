@@ -3,6 +3,7 @@ import {Trainer} from "../model/trainer.model";
 import {NavController, NavParams, Searchbar} from "ionic-angular";
 import {Kurs} from "../model/kurs.model";
 import {KursDetailPageComponent} from "./kurs-detail-page.component";
+import {MemberListPageComponent} from "../member/member-list-page.component";
 
 @Component({
   selector:'kurs-list-page',
@@ -84,6 +85,11 @@ export class KursListPageComponent {
 
     this.navCtrl.push(KursDetailPageComponent, kurs);
 
+  }
+
+  public showMemberList(kurs : Kurs) : void {
+
+    this.navCtrl.push(MemberListPageComponent, {memberList : kurs.mitgliederAngemeldet});
   }
 
 }

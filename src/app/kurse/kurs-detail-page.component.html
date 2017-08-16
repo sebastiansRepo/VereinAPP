@@ -11,7 +11,7 @@
 
   <ion-list>
     <button ion-item *ngFor="let termin of kurs.termine" (click)="showTerminDetails(termin)">
-      <h2>Datum:{{termin.datum | date:'EEEE, MMMM dd, y' }}</h2>
+      <h2>{{termin.datum | date:'EEEE, MMMM dd, y' }}</h2>
     </button>
 
   </ion-list>

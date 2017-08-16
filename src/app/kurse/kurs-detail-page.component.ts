@@ -16,14 +16,11 @@ export class KursDetailPageComponent {
 
   constructor(private navParams : NavParams,
               private navCtrl : NavController) {
-    //TODO - hier muss irgendwie noch etwas gemacht werden, damit man sieht, welche Mitglieder gescannt wurden und welche nicht, evtl ein 2 Array implementieren oder ein boolean mit aufnehmen...
     if (this.navParams.data.id) {
       this.kurs = this.navParams.data;
 
       //now set pageTitle
-      this.pageTitle = this.kurs.name;
-
-
+      this.pageTitle = this.kurs.name + ' dates';
 
     } else {
       console.log("Should not happen!");

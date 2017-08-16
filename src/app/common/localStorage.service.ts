@@ -17,7 +17,7 @@ export class LocalStorageService {
   }
 
   public resetData() : void {
-    let defaultObject : LocalStorageDataObject = new LocalStorageDataObject(false,"","","-1");
+    let defaultObject : LocalStorageDataObject = new LocalStorageDataObject("","","-1");
     this.setAll(defaultObject);
   }
 
@@ -30,17 +30,6 @@ export class LocalStorageService {
   }
 
   //-------------------- getters and setters --------------------//
-
-  public getStayLoggedIn() : boolean {
-    return this.getAll().stayLoggedIn;
-  }
-
-  public setStayLoggedIn(newStayLoggedIn) : void {
-    let storedData : LocalStorageDataObject = this.getAll();
-    storedData.stayLoggedIn = newStayLoggedIn;
-    this.setAll(storedData);
-  }
-
   public getUsername() : string {
     return this.getAll().username;
   }

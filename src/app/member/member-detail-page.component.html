@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+
+    <ion-title>{{pageTitle}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list *ngIf="member">
+    <ion-item>
+      <ion-label>Firstname</ion-label>
+      <ion-input float-right readonly [(ngModel)]="member.vorname"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Lastname</ion-label>
+      <ion-input float-right readonly [(ngModel)]="member.nachname"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label>Birthdate</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" disabled="true" [(ngModel)]="birthday"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Birthplace</ion-label>
+      <ion-input float-right readonly [(ngModel)]="member.gebOrt"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Exit Date</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" disabled="true" [(ngModel)]="exitDate"></ion-datetime>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

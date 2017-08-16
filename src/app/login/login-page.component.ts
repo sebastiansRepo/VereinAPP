@@ -11,8 +11,6 @@ import {Login} from "../model/login.model";
 })
 export class LoginPageComponent {
 
-  private stayLoggedIn : boolean;
-
   private backendUrl : string = '';
 
   private login : Login;
@@ -31,12 +29,7 @@ export class LoginPageComponent {
 
   ionViewWillEnter() {
     this.localStorageService.defaultInit(); // initializes the storage if first app start
-    this.stayLoggedIn = this.localStorageService.getStayLoggedIn();
 
-    //auto login
-    if(this.stayLoggedIn && this.authService.isLoggedIn()) {
-      this.navCtrl.setRoot(KursListPageComponent);
-    }
   }
 
   public signIn() {

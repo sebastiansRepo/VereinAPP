@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavParams} from "ionic-angular";
+import {AlertController, NavParams} from "ionic-angular";
 import {Termin} from "../model/termin.model";
 import {BarcodeScanner, BarcodeScanResult} from "@ionic-native/barcode-scanner";
 import {Kurs} from "../model/kurs.model";
@@ -29,14 +29,15 @@ export class TerminDetailPageComponent {
   constructor(private navParams : NavParams,
               private barcodeScanner: BarcodeScanner,
               private mitgliedService : MitgliedService,
-              private terminService : TerminService) {
+              private terminService : TerminService,
+              private alertCtrl : AlertController) {
 
     if (this.navParams.data.termin && this.navParams.data.kurs) {
       this.termin = this.navParams.data.termin;
       this.kurs = this.navParams.data.kurs;
 
       //now set pageTitle
-      this.pageTitle = this.kurs.name;
+      this.pageTitle = this.kurs.name + ' attendance';
 
       //alle die erschienen sind, das kann beim 2 Seitenaufruf auch schon die enthalten, die gekommen sind, aber nicht angemeldet waren
       this.termin.mitgliederAnwesend.forEach( (member) => this.helpMemberList.push(member));
@@ -49,6 +50,20 @@ export class TerminDetailPageComponent {
 
   }
 
+  public showHelp() : void {
+
+    let alert = this.alertCtrl.create({
+      title: 'Help for user assignment',
+      message:  'Green: User was registered and appeared <br/>' +
+                'Red: User was registered and did not appear <br/>' +
+                'Black: User was not registered and appeared',
+      buttons: ['Dismiss']
+    });
+
+    alert.present();
+
+
+  }
 
   public startScan() : void {
 
@@ -56,22 +71,39 @@ export class TerminDetailPageComponent {
       .then(
         (barcodeData : BarcodeScanResult) => {
 
-          //den MitgliedService auf Server-Seite habe ich schon gemacht!!!
           this.mitgliedService.getMitglied(barcodeData.text)
             .then((member : Mitglied) => {
-              this.helpMemberList.push(member);
 
-              //
-              this.termin.mitgliederAnwesend = this.helpMemberList;
+              //now check if user membership is expired
+              let now : Date = new Date();
 
-              //update termin on server-side!
-              this.terminService.updateTermin(this.termin)
-                .then((termin : Termin) => {
-                //update termin reference
-                this.termin = termin;
+              if (now > member.trittAusDatum) {
 
-                this.assignLists();
+                let alert = this.alertCtrl.create({
+                  title: 'Membership expired',
+                  buttons: ['Dismiss']
                 });
+
+                alert.present();
+
+              } else {
+
+                this.helpMemberList.push(member);
+
+                //
+                this.termin.mitgliederAnwesend = this.helpMemberList;
+
+                //update termin on server-side!
+                this.terminService.updateTermin(this.termin)
+                  .then((termin : Termin) => {
+                    //update termin reference
+                    this.termin = termin;
+
+                    this.assignLists();
+                  });
+              }
+
+
             })
             .catch((err) => {
               console.log(err);
@@ -138,6 +170,25 @@ export class TerminDetailPageComponent {
     this.redMemberList = this.memberListDiff<Mitglied>(this.greenMemberList, this.kurs.mitgliederAngemeldet);
 
     this.blackMemberList = this.arr_diff_not_in_a2<Mitglied>(this.kurs.mitgliederAngemeldet, this.helpMemberList);
+
+    //now sort them
+    this.sortByNachname(this.greenMemberList);
+    this.sortByNachname(this.redMemberList);
+    this.sortByNachname(this.blackMemberList);
+
+  }
+
+  private sortByNachname(memberList : Mitglied[]) : void {
+
+    memberList.sort( (m1,m2) => {
+      if (m1.nachname < m2.nachname) {
+        return -1;
+      }
+      if (m1.nachname > m2.nachname) {
+        return 1;
+      }
+      return 0;
+    });
 
   }
 

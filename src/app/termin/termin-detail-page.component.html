@@ -8,6 +8,9 @@
       <button ion-button icon-only (click)="startScan()">
         <ion-icon name="barcode"></ion-icon>
       </button>
+      <button ion-button icon-only (click)="showHelp()">
+        <ion-icon name="help"></ion-icon>
+      </button>
     </ion-buttons>
 
   </ion-navbar>
@@ -18,13 +21,13 @@
 
   <ion-list>
     <button color="secondary" ion-item *ngFor="let greenMember of greenMemberList">
-      <h2>Id: {{greenMember.id}} Vorname:{{greenMember.vorname}} Nachname: {{greenMember.nachname}} Geburtsdatum: {{greenMember.gebDatum}}</h2>
+      <h2>{{greenMember.vorname}} {{greenMember.nachname}}</h2>
     </button>
     <button color="danger" ion-item *ngFor="let redMember of redMemberList">
-      <h2>Id: {{redMember.id}} Vorname:{{redMember.vorname}} Nachname: {{redMember.nachname}} Geburtsdatum: {{redMember.gebDatum}}</h2>
+      <h2>{{redMember.vorname}} {{redMember.nachname}}</h2>
     </button>
     <button color="dark" ion-item *ngFor="let blackMember of blackMemberList">
-      <h2>Id: {{blackMember.id}} Vorname:{{blackMember.vorname}} Nachname: {{blackMember.nachname}} Geburtsdatum: {{blackMember.gebDatum}}</h2>
+      <h2>{{blackMember.vorname}} {{blackMember.nachname}}</h2>
     </button>
 
   </ion-list>

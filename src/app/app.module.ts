@@ -8,7 +8,6 @@ import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {BarcodeScanner} from "@ionic-native/barcode-scanner";
 import {AuthService} from "./common/auth.service";
-import {SubscriptionService} from "./common/subscription.service";
 import {LoginPageComponent} from "./login/login-page.component";
 import {HttpModule} from "@angular/http";
 import {LocalStorageService} from "./common/localStorage.service";
@@ -18,6 +17,8 @@ import {KursDetailPageComponent} from "./kurse/kurs-detail-page.component";
 import {TerminDetailPageComponent} from "./termin/termin-detail-page.component";
 import {MitgliedService} from "./termin/mitglied.service";
 import {TerminService} from "./termin/termin.service";
+import {MemberDetailPageComponent} from "./member/member-detail-page.component";
+import {MemberListPageComponent} from "./member/member-list-page.component";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import {TerminService} from "./termin/termin.service";
     LoginPageComponent,
     KursListPageComponent,
     KursDetailPageComponent,
-    TerminDetailPageComponent
+    TerminDetailPageComponent,
+    MemberDetailPageComponent,
+    MemberListPageComponent
   ],
   imports: [
     BrowserModule,
@@ -40,14 +43,15 @@ import {TerminService} from "./termin/termin.service";
     LoginPageComponent,
     KursListPageComponent,
     KursDetailPageComponent,
-    TerminDetailPageComponent
+    TerminDetailPageComponent,
+    MemberDetailPageComponent,
+    MemberListPageComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
     BarcodeScanner,
     AuthService,
-    SubscriptionService,
     LocalStorageService,
     ServerService,
     MitgliedService,
