@@ -16,7 +16,6 @@ export class AuthService{
   }
 
   public signIn(login : Login)  {
-    //TODO - es sollte normal seit dem Login nicht vorkommen, das die BackendURL leer ist, aber evtl nochmal abfangen!
     this.BACKEND_URL = this.localStorageService.getBackendUrl();
 
     let url  : string = this.BACKEND_URL + this.DOMAIN_LOGIN_PATH + "/auth";

@@ -19,6 +19,7 @@ import {MitgliedService} from "./termin/mitglied.service";
 import {TerminService} from "./termin/termin.service";
 import {MemberDetailPageComponent} from "./member/member-detail-page.component";
 import {MemberListPageComponent} from "./member/member-list-page.component";
+import {KursReportService} from "./kurse/kurs-report.service";
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {MemberListPageComponent} from "./member/member-list-page.component";
     ServerService,
     MitgliedService,
     TerminService,
+    KursReportService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

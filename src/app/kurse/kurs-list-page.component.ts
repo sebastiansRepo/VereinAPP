@@ -1,9 +1,11 @@
 import {Component, ViewChild} from "@angular/core";
 import {Trainer} from "../model/trainer.model";
-import {NavController, NavParams, Searchbar} from "ionic-angular";
+import {AlertController, NavController, NavParams, Searchbar} from "ionic-angular";
 import {Kurs} from "../model/kurs.model";
 import {KursDetailPageComponent} from "./kurs-detail-page.component";
 import {MemberListPageComponent} from "../member/member-list-page.component";
+import {KursReportService} from "./kurs-report.service";
+import {Report} from "../model/report.model";
 
 @Component({
   selector:'kurs-list-page',
@@ -24,7 +26,9 @@ export class KursListPageComponent {
   private filteredKurse : Kurs[] = [];
 
   constructor(private navParams : NavParams,
-              private navCtrl : NavController) {
+              private navCtrl : NavController,
+              private alertCtrl : AlertController,
+              private reportService : KursReportService) {
 
     if (this.navParams.data.id){
       this.trainer = this.navParams.data;
@@ -85,6 +89,21 @@ export class KursListPageComponent {
 
     this.navCtrl.push(KursDetailPageComponent, kurs);
 
+  }
+
+  public showCourseStats(id : string) : void {
+
+    this.reportService.getReportForCourse(id).then( (report : Report) => {
+      if (report) {
+        let alert = this.alertCtrl.create({
+          title: 'Course Statistics',
+          message:  report.content,
+          buttons: ['Dismiss']
+        });
+
+        alert.present();
+      }
+    });
   }
 
   public showMemberList(kurs : Kurs) : void {

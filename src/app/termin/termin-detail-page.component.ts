@@ -22,8 +22,6 @@ export class TerminDetailPageComponent {
 
   private helpMemberList : Mitglied[] = [];
 
-  //TODO - sollen vergangene Termine noch editierbar sein?!
-
   private pageTitle : string = '';
 
   constructor(private navParams : NavParams,

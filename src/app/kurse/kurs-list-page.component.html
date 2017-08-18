@@ -28,6 +28,10 @@
         {{kurs.name}} <span float-right>registered:{{kurs.mitgliederAngemeldet.length}}</span>
       </button>
       <ion-item-options side="right">
+        <button (click)="showCourseStats(kurs.id)" ion-button color="secondary">
+          <ion-icon name="stats"></ion-icon>
+          Stats
+        </button>
         <button (click)="showMemberList(kurs)" ion-button color="primary">
           <ion-icon name="people"></ion-icon>
           Members
