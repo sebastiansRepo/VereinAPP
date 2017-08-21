@@ -53,6 +53,13 @@ export class LoginPageComponent {
           } else {
             console.log("should not happen!");
             console.log("No Login could be found!");
+            let alert = this.alertCtrl.create({
+              title: 'Something went wrong',
+              message: 'Wrong login credentials',
+              buttons: ['Dismiss']
+            });
+
+            alert.present();
           }
 
         })
