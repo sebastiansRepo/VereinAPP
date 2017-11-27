@@ -11,6 +11,7 @@ import {Report} from "../model/report.model";
   selector:'kurs-list-page',
   templateUrl: 'kurs-list-page.component.html'
 })
+// git repo init comment
 export class KursListPageComponent {
 
   private trainer : Trainer;
